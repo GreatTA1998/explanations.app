@@ -150,6 +150,7 @@ function handleRightArrowClick () {
     overflow: hidden;
 
     box-sizing: border-box;
+    border: 4px solid red;
   }
   .card:hover {
     background-size: auto 100%;

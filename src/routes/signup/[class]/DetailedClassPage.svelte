@@ -123,17 +123,17 @@
   
   <div style="margin-top: 20px;"></div>
 
-  <div bind:clientWidth={carouselWidth} style="margin-left: 1%;">
+  <div bind:clientWidth={carouselWidth} style="margin-left: 1%; border: 2px solid red">
   {#if classTutorsDocs}
     <!-- When nobody has signed up, an orange box with nothing is confusing -->
     {#if classTutorsDocs.length > 0 && selectedTutorUID !== ''}
       {#key selectedTutorUID + rerenderKeyForCarousel}
-        <div use:setupCarouselData>
+        <div use:setupCarouselData style="border: 2px solid orange;">
           {#if carouselWidth}
             <ImageCarousel numOfImages={designatedRoomBoardIDs.length + 1} resizeOnChange={carouselWidth}>
               {#if designatedRoomBoardIDs.length > 0}
                 {#each designatedRoomBoardIDs as id}
-                  <div class="card">
+                  <div style="border: 2px solid yellow;">
                     <RenderlessListenToBoard dbPath={boardsCollectionDbPath + id} let:boardDoc={boardDoc}> 
                       {#if boardDoc}
                         <!-- <div style="font-family: sans-serif !important; color: grey; font-size: 0.7rem; margin-left: 2px; margin-top: 8px; margin-bottom: 4px;">
@@ -159,6 +159,20 @@
                             canvasWidth={carouselWidth}
                             canvasHeight={carouselWidth * 3/4 - 100}
                           />
+
+                          <ReusableDoodleVideo 
+                            {boardDoc}
+                            boardDbPath={boardsCollectionDbPath + id}
+                            canvasWidth={1000}
+                            canvasHeight={carouselWidth * 3/4 - 100}
+                          />
+                          <!-- Try 100% width -->
+                          <!-- <ReusableDoodleVideo 
+                            {boardDoc}
+                            boardDbPath={boardsCollectionDbPath + id}
+                            canvasWidth={carouselWidth}
+                            canvasHeight={carouselWidth * 3/4 - 100}
+                          /> -->
                         {:else}
                           <ReusableLiveBlackboard
                             {boardDoc}
@@ -179,7 +193,7 @@
                 <!-- THE PRESENCE OF THIS BREAKS THE CAROUSEL IN UNEXPECTED WAYS, E.G YOU NEED A NEW PAGE, WHICH BRINGS A 
                 INTRUSIVE RIGHT ARROW ONTO THE NEW BLACKBOARD -->
                 <!-- DEFENSIVE PROGRAMMING: in case the reload finishes before the new blackboard doc is created -->
-                <div class="card">
+                <div>
                   <div on:click={updateNewBlackboardLocation} style="display: flex; place-items: center; background-color: hsl(0,0%,0%, 0.80); color: white; width: {carouselWidth}px; height: {200}px">
                     <div style="font-size: 4rem; margin-left: auto; margin-right: auto;">
                       click for new board
